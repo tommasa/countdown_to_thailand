@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>הספירה לאחור לטיסה לתאילנד ✈️🇹🇭</title>
+  <style>
+    body {
+      font-family: "Heebo", Arial, sans-serif;
+      background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: #fff;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      backdrop-filter: brightness(0.8);
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .title {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      color: #ffeb99;
+    }
+
+    .countdown {
+      display: flex;
+      flex-direction: row-reverse;
+      gap: 1rem;
+      font-size: 1.5rem;
+      justify-content: center;
+      z-index: 1;
+    }
+
+    .countdown div {
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
+      padding: 1rem;
+      min-width: 80px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .label {
+      font-size: 0.8rem;
+      margin-top: 0.3rem;
+      color: #ffecb3;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+  <div class="content">
+    <div class="title">✈️ הספירה לאחור לטיסה שלנו לתאילנד 🇹🇭</div>
+    <div class="subtitle">דרך דובאי - יומיים של הרפתקה לפני גן העדן!</div>
+    <div class="countdown">
+      <div><span id="days">0</span><div class="label">ימים</div></div>
+      <div><span id="hours">0</span><div class="label">שעות</div></div>
+      <div><span id="minutes">0</span><div class="label">דקות</div></div>
+      <div><span id="seconds">0</span><div class="label">שניות</div></div>
+    </div>
+  </div>
+
+  <script>
+    const targetDate = new Date('2025-12-01T18:10:00'); // תאריך היעד לטיסה
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = targetDate - now;
+      if (diff <= 0) {
+        document.body.innerHTML = '<h1 style="color:#fff;text-shadow:0 2px 6px rgba(0,0,0,0.6);">🎉 הגיע הזמן להמראה! טיסה נעימה! ✈️🇹🇭</h1>';
+        return;
+      }
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+      document.getElementById('days').textContent = days;
+      document.getElementById('hours').textContent = hours;
+      document.getElementById('minutes').textContent = minutes;
+      document.getElementById('seconds').textContent = seconds;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
