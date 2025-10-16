@@ -2,112 +2,142 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>הספירה לאחור לטיסה לתאילנד ✈️🇹🇭</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b1020" />
+  <title>הספירה לאחור לטיסה ✈️🇹🇭</title>
   <style>
-    body {
-      font-family: "Heebo", Arial, sans-serif;
-      background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      color: #fff;
-      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+    :root{
+      --bg: #0b1020;
+      --veil: rgba(0,0,0,.45);
+      --card: rgba(255,255,255,.13);
+      --text: #ffffff;
+      --muted: #e7eaf0cc;
+      --accent: #42b3ff;
+      --gold: #ffe08a;
+    }
+    html, body { height: 100%; }
+    body{
       margin: 0;
-      backdrop-filter: brightness(0.8);
+      -webkit-font-smoothing: antialiased;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Heebo, "Noto Sans Hebrew", Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80');
+      background-size: cover; background-position: center; background-attachment: fixed;
+      display: grid; place-items: stretch;
     }
-
-    .overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.4);
-      z-index: 0;
+    .veil{position: fixed; inset: 0; background: var(--veil);}
+    .wrap{
+      position: relative; z-index: 1;
+      min-height: 100dvh;
+      padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+      display: grid; align-content: center; gap: 16px;
     }
+    header{ text-align: center; }
+    h1{ margin: 0; font-weight: 800; letter-spacing: .2px; font-size: clamp(20px, 5.5vw, 34px); }
+    .sub{ color: var(--gold); font-size: clamp(13px, 3.6vw, 16px); margin-top: 6px; }
 
-    .content {
-      position: relative;
-      z-index: 1;
-    }
-
-    .title {
-      font-size: 2.2rem;
-      margin-bottom: 1rem;
-    }
-
-    .subtitle {
-      font-size: 1.2rem;
-      margin-bottom: 2rem;
-      color: #ffeb99;
-    }
-
-    .countdown {
+    .grid{
       display: flex;
-      flex-direction: row-reverse;
-      gap: 1rem;
-      font-size: 1.5rem;
+      flex-direction: row;
       justify-content: center;
-      z-index: 1;
+      gap: 10px;
+      margin-top: 6px;
     }
 
-    .countdown div {
-      background: rgba(0, 0, 0, 0.5);
-      border-radius: 10px;
-      padding: 1rem;
-      min-width: 80px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    .card{
+      background: var(--card);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 18px; padding: 14px 10px; text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,.18);
+      min-width: 70px;
     }
+    .num{ font-weight: 900; font-variant-numeric: tabular-nums; line-height: 1; font-size: clamp(34px, 11vw, 52px); }
+    .label{ margin-top: 6px; font-size: 12px; letter-spacing: .12em; color: var(--muted); text-transform: uppercase; }
 
-    .label {
-      font-size: 0.8rem;
-      margin-top: 0.3rem;
-      color: #ffecb3;
-    }
+    .controls{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top: 6px; }
+    .btn{ appearance:none; border:0; border-radius: 14px; padding: 12px 16px; font-weight: 700; cursor:pointer; box-shadow: 0 4px 16px rgba(0,0,0,.25); }
+    .primary{ background: linear-gradient(180deg, var(--accent), #1a78ff); color:#fff; }
+    .secondary{ background: rgba(255,255,255,.14); color:#fff; border:1px solid rgba(255,255,255,.24); }
+    .hint{ text-align:center; font-size: 12px; color: var(--muted); }
+
+    .toast{ position: fixed; inset-inline: 12px; bottom: calc(12px + env(safe-area-inset-bottom));
+      padding: 10px 14px; border-radius: 12px; background: rgba(22,30,48,.9); color:#fff; opacity:0; transform: translateY(12px);
+      transition: .28s ease; text-align:center; }
+    .toast.show{ opacity:1; transform: translateY(0); }
   </style>
 </head>
 <body>
-  <div class="overlay"></div>
-  <div class="content">
-    <div class="title">✈️ הספירה לאחור לטיסה שלנו לתאילנד 🇹🇭</div>
-    <div class="subtitle">דרך דובאי - יומיים של הרפתקה לפני גן העדן!</div>
-    <div class="countdown">
-      <div><span id="days">0</span><div class="label">ימים</div></div>
-      <div><span id="hours">0</span><div class="label">שעות</div></div>
-      <div><span id="minutes">0</span><div class="label">דקות</div></div>
-      <div><span id="seconds">0</span><div class="label">שניות</div></div>
+  <div class="veil" aria-hidden="true"></div>
+  <div class="wrap">
+    <header>
+      <h1>✈️ הספירה לאחור לטיסה המשפחתית לתאילנד 🇹🇭</h1>
+      <div class="sub">דרך דובאי – יומיים של כיף לפני גן העדן</div>
+    </header>
+
+    <section class="grid" aria-live="polite" aria-atomic="true">
+      <div class="card"><div class="num" id="secs">00</div><div class="label">שניות</div></div>
+      <div class="card"><div class="num" id="mins">00</div><div class="label">דקות</div></div>
+      <div class="card"><div class="num" id="hours">00</div><div class="label">שעות</div></div>
+      <div class="card"><div class="num" id="days">0</div><div class="label">ימים</div></div>
+    </section>
+
+    <div class="controls">
+      <button class="btn primary" id="copy">העתקת קישור שיתוף</button>
+      <button class="btn secondary" id="theme">מצב כהה/בהיר</button>
     </div>
+    <div class="hint" id="foot"></div>
   </div>
 
-  <script>
-    const targetDate = new Date('2025-12-01T18:10:00'); // תאריך היעד לטיסה
+  <div class="toast" id="toast">הקישור הועתק 📋</div>
 
-    function updateCountdown() {
+  <script>
+    const DEFAULT_ISO_UTC = '2025-12-01T16:10:00Z';
+    const qs = new URLSearchParams(location.search);
+    const untilParam = qs.get('until');
+    const target = new Date(untilParam || DEFAULT_ISO_UTC);
+
+    const $ = (id)=>document.getElementById(id);
+    const pad = (n)=> String(n).padStart(2,'0');
+
+    function update(){
       const now = new Date();
-      const diff = targetDate - now;
-      if (diff <= 0) {
-        document.body.innerHTML = '<h1 style="color:#fff;text-shadow:0 2px 6px rgba(0,0,0,0.6);">🎉 הגיע הזמן להמראה! טיסה נעימה! ✈️🇹🇭</h1>';
+      let diff = target - now;
+      if (Number.isNaN(target.getTime())){
+        $('foot').textContent = 'שגיאה: תאריך יעד לא תקין.';
         return;
       }
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
-      const seconds = Math.floor((diff / 1000) % 60);
-      document.getElementById('days').textContent = days;
-      document.getElementById('hours').textContent = hours;
-      document.getElementById('minutes').textContent = minutes;
-      document.getElementById('seconds').textContent = seconds;
+      if (diff <= 0){
+        $('days').textContent = 0; $('hours').textContent = '00'; $('mins').textContent = '00'; $('secs').textContent = '00';
+        $('foot').textContent = '🎉 המראה! טיסה נעימה!';
+        return;
+      }
+      const d = Math.floor(diff/86400000); diff -= d*86400000;
+      const h = Math.floor(diff/3600000);  diff -= h*3600000;
+      const m = Math.floor(diff/60000);    diff -= m*60000;
+      const s = Math.floor(diff/1000);
+      $('days').textContent = d;
+      $('hours').textContent = pad(h);
+      $('mins').textContent = pad(m);
+      $('secs').textContent = pad(s);
     }
+    update();
+    setInterval(update, 1000);
 
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
+    function toast(msg){ const t=$('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), 1800); }
+
+    $('copy').addEventListener('click', async ()=>{
+      const url = new URL(location.href);
+      if (!qs.get('until')){ url.searchParams.set('until', target.toISOString()); }
+      try{ await navigator.clipboard.writeText(url.toString()); toast('הקישור הועתק 📋'); }
+      catch{ toast('לא הצלחתי להעתיק – אפשר להעתיק משורת הכתובת'); }
+    });
+
+    try{
+      const local = new Intl.DateTimeFormat(undefined, {dateStyle:'full', timeStyle:'short'}).format(target);
+      $('foot').textContent = `המראה מתוזמנת ל־${local}`;
+    }catch{}
   </script>
 </body>
 </html>
